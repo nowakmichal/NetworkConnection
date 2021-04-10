@@ -46,7 +46,7 @@ namespace NetworkConnection
             var result = WNetAddConnection2(
                 netResource, credentials.Password, credentials.UserName, 0);
 
-            if (result != 0)
+            if (result != 0 && result != 1219)
             {
                 throw new Win32Exception(result);
             }
@@ -104,7 +104,7 @@ namespace NetworkConnection
         /// <param name="username">The username to use when connecting to the network resource.</param>
         /// <param name="flags">The flags. See http://msdn.microsoft.com/en-us/library/aa385413%28VS.85%29.aspx for more information.</param>
         /// <returns></returns>
-        [DllImport("mpr.dll")]
+        [DllImport("mpr.dll", CharSet = CharSer.Unicode)]
         private static extern int WNetAddConnection2(NetResource netResource,
                                                      string password,
                                                      string username,
@@ -120,7 +120,7 @@ namespace NetworkConnection
         /// </param>
         /// <param name="force">Specifies whether the disconnection should occur if there are open files or jobs on the connection. If this parameter is FALSE, the function fails if there are open files or jobs.</param>
         /// <returns></returns>
-        [DllImport("mpr.dll")]
+        [DllImport("mpr.dll", CharSet = CharSer.Unicode))]
         private static extern int WNetCancelConnection2(string name, int flags, bool force);
 
         #endregion
